@@ -132,29 +132,30 @@ const App = () => {
   );
 
   const switchChain = useCallback(() => {
-    window.ethereum
-      .request({
-        method: "wallet_addEthereumChain",
-        params: [
-          {
-            chainId: "0x38",
-            chainName: "Binance Smart Chain",
-            nativeCurrency: {
-              name: "BNB",
-              symbol: "bnb",
-              decimals: 18,
+    if (window.ethereum)
+      window.ethereum
+        .request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0x38",
+              chainName: "Binance Smart Chain",
+              nativeCurrency: {
+                name: "BNB",
+                symbol: "bnb",
+                decimals: 18,
+              },
+              rpcUrls: ["https://bsc-dataseed.binance.org/"],
+              blockExplorerUrls: ["https://bscscan.com/"],
             },
-            rpcUrls: ["https://bsc-dataseed.binance.org/"],
-            blockExplorerUrls: ["https://bscscan.com/"],
-          },
-        ],
-      })
-      .then((res) => {
-        console.debug("res: ", res);
-      })
-      .catch((err) => {
-        console.debug("err: ", err);
-      });
+          ],
+        })
+        .then((res) => {
+          console.debug("res: ", res);
+        })
+        .catch((err) => {
+          console.debug("err: ", err);
+        });
   }, []);
 
   const buy = useCallback(async () => {
@@ -267,7 +268,7 @@ const App = () => {
   }, [account, chainId, switchChain]);
 
   const handleConnect = useCallback(() => {
-    window.ethereum.enable();
+    if (window.ethereum) window.ethereum.enable();
   }, []);
 
   const handleAddToken = useCallback(() => {
@@ -410,40 +411,47 @@ const App = () => {
   }, [hasTokenApprovedFunc, tokenBalance, status]);
 
   useEffect(() => {
-    window.ethereum
-      .send("eth_requestAccounts", [])
-      .then((res) => {
-        console.debug("res: ", res);
+    if (window.ethereum) {
+      window.ethereum
+        .send("eth_requestAccounts", [])
+        .then((res) => {
+          console.debug("res: ", res);
 
-        if (res.result?.length > 0) {
-          setAccount(res?.result[0]);
-        }
-      })
-      .catch((err) => {
-        console.debug("err: ", err);
-      });
+          if (res.result?.length > 0) {
+            setAccount(res?.result[0]);
+          }
+        })
+        .catch((err) => {
+          console.debug("err: ", err);
+        });
 
-    window.ethereum
-      .request({ method: "eth_chainId" })
-      .then((res) => {
-        console.debug("chainId: ", res);
+      window.ethereum
+        .request({ method: "eth_chainId" })
+        .then((res) => {
+          console.debug("chainId: ", res);
 
-        setChainId(res);
-      })
-      .catch((err) => {
-        console.debug("err: ", err);
-      });
+          setChainId(res);
+        })
+        .catch((err) => {
+          console.debug("err: ", err);
+        });
 
-    window.ethereum.on("accountsChanged", handleAccountsChanged);
-    window.ethereum.on("chainChanged", handleChainChanged);
-    window.ethereum.on("connect", handleProviderConnect);
-    window.ethereum.on("disconnect", handleDisconnect);
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
+      window.ethereum.on("chainChanged", handleChainChanged);
+      window.ethereum.on("connect", handleProviderConnect);
+      window.ethereum.on("disconnect", handleDisconnect);
+    }
 
     return () => {
-      window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
-      window.ethereum.removeListener("chainChanged", handleChainChanged);
-      window.ethereum.removeListener("connect", handleProviderConnect);
-      window.ethereum.removeListener("disconnect", handleDisconnect);
+      if (window.ethereum) {
+        window.ethereum.removeListener(
+          "accountsChanged",
+          handleAccountsChanged
+        );
+        window.ethereum.removeListener("chainChanged", handleChainChanged);
+        window.ethereum.removeListener("connect", handleProviderConnect);
+        window.ethereum.removeListener("disconnect", handleDisconnect);
+      }
     };
   }, [
     handleAccountsChanged,
