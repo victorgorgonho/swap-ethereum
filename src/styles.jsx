@@ -47,6 +47,7 @@ export const RightContainer = styled.div`
 
   @media (max-width: 1060px) {
     width: 100%;
+    margin-bottom: 32px;
   }
 
   @media (max-width: 545px) {
@@ -131,9 +132,10 @@ export const RightSwap = styled.div`
   }
 
   @media (max-width: 630px) {
-    padding: 0;
+    padding: 1rem 0 0 0;
 
     width: initial;
+    height: 900px;
   }
 
   @media (max-width: 485px) {

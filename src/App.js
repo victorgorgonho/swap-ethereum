@@ -515,7 +515,7 @@ const App = () => {
             radius="14px"
             onClick={handleAddToken}
           >
-            <Typography pointer>Add {symbol}</Typography>
+            <Typography pointer>Adicionar {symbol}</Typography>
           </Button>
           <Button
             pointer
@@ -524,7 +524,7 @@ const App = () => {
             radius="14px"
             onClick={handleConnect}
           >
-            <Typography pointer>{account ?? "Connect wallet"}</Typography>
+            <Typography pointer>{account ?? "Conectar carteira"}</Typography>
           </Button>
         </RightHeader>
         <RightContent>
@@ -538,7 +538,7 @@ const App = () => {
                 marginBottom: "8px",
               }}
             >
-              Trade tokens fastly!
+              Troque tokens com facilidade!
             </Typography>
 
             <Box
@@ -559,10 +559,10 @@ const App = () => {
                 justify="space-between"
               >
                 <Typography size="16px" color="#5eb3e5">
-                  From:
+                  De:
                 </Typography>
                 <Typography size="16px" color="rgba(255, 255, 255, 0.44)">
-                  Balance:{" "}
+                  Saldo:{" "}
                   {account
                     ? Number(isBuying ? bnbBalance : tokenBalance)?.toFixed(6)
                     : "0.000000000"}{" "}
@@ -610,7 +610,7 @@ const App = () => {
                       }
                     }}
                   >
-                    Max:
+                    Máximo:
                   </Typography>
 
                   <Box
@@ -683,10 +683,10 @@ const App = () => {
                 justify="space-between"
               >
                 <Typography size="16px" color="#5eb3e5">
-                  To:
+                  Para:
                 </Typography>
                 <Typography size="16px" color="rgba(255, 255, 255, 0.44)">
-                  Balance:{" "}
+                  Saldo:{" "}
                   {account
                     ? Number(isBuying ? tokenBalance : bnbBalance)?.toFixed(6)
                     : "0.000000000"}{" "}
@@ -718,7 +718,7 @@ const App = () => {
                   gap="12px"
                 >
                   <Typography weight="bold" size="16px" color="#5eb3e5">
-                    Max:
+                    Máximo:
                   </Typography>
 
                   <Box
@@ -789,12 +789,12 @@ const App = () => {
             >
               <Typography size="18px">
                 {toAmount === 0 || !fromAmount
-                  ? "Input a value first!"
+                  ? "Digite um valor antes!"
                   : isBuying
-                  ? "Buy"
+                  ? "Comprar"
                   : hasTokenApproved
-                  ? "Sell"
-                  : `Approve ${symbol}`}
+                  ? "Vender"
+                  : `Aprovar ${symbol}`}
               </Typography>
             </Button>
 
@@ -805,6 +805,7 @@ const App = () => {
               height="40px"
               justify="space-between"
               margin="16px 0 0 0"
+              gap="16px"
             >
               <Box
                 align="center"
@@ -827,7 +828,7 @@ const App = () => {
                   color="#1bc870"
                   onClick={() => {
                     window.open(
-                      `https://poocoin.app/tokens/${BNB_ADDRESS}`,
+                      `https://dexscreener.com/bsc/${BNB_ADDRESS}`,
                       "_blank"
                     );
                   }}
@@ -855,7 +856,7 @@ const App = () => {
                   color="#1bc870"
                   onClick={() => {
                     window.open(
-                      `https://poocoin.app/tokens/${contractAddress}`,
+                      `https://dexscreener.com/bsc/${contractAddress}`,
                       "_blank"
                     );
                   }}
